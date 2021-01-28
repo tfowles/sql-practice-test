@@ -4,12 +4,6 @@ name: CI
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches:
-      - '*'
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -18,6 +12,15 @@ jobs:
   build:
     
     runs-on: ubuntu-latest
+    
+    container:
+      image: mcr.microsoft.com/mssql/server:2017-latest
+      env:
+        ACCEPT_EULA: Y
+        SA_PASSWORD: MySuperCoolSecret123!
+        MSSQL_PID: Developer
+      ports:
+        - 1433:1433
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
