@@ -16,8 +16,17 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    container: mcr.microsoft.com/mssql/server:2017-latest
+    
     runs-on: ubuntu-latest
+    
+    container:
+      image: mcr.microsoft.com/mssql/server:2017-latest
+      env:
+        ACCEPT_EULA: Y
+        SA_PASSWORD: MySuperCoolSecret123!
+        MSSQL_PID: Developer
+      ports:
+        - 1433:1433
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
