@@ -1,18 +1,37 @@
-name: Super-Linter
+# This is a basic workflow to help you get started with Actions
 
-# Run this workflow every time a new commit pushed to your repository
+name: CI
+
+# Controls when the action will run. 
 on: push
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # Set the job key. The key is displayed as the job name
-  # when a job name is not provided
-  super-lint:
-    # Name the Job
-    name: Lint code base
-    # Set the type of machine to run on
+  # This workflow contains a single job called "build"
+  build:
+    
     runs-on: ubuntu-latest
+    
+    container:
+      image: mcr.microsoft.com/mssql/server:2017-latest
+      env:
+        ACCEPT_EULA: Y
+        SA_PASSWORD: MySuperCoolSecret123!
+        MSSQL_PID: Developer
+      ports:
+        - 1433:1433
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks out a copy of your repository on the ubuntu-latest machine
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project!
